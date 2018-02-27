@@ -1,0 +1,64 @@
+<project name="studentCoursesPlanner" default="compile_all" basedir="..">
+
+    <property name="BUILD.compiler"       value="modern"/>
+    <property name="src"                  value="src"/>
+    <property name="BUILD"                value="src/BUILD"/>
+    <property name="classes"              value="${BUILD}/classes"/>
+    <property name="doc"                  value="src/doc"/>
+
+    <target name="all" depends="compile_all"/>
+
+    <target name="compile_all"
+            depends="studentCoursesPlanner"/>
+
+    <target name="clean">
+        <delete dir="${BUILD}"/>
+        <delete dir ="${doc}"/>
+    </target>
+
+    <!-- Prepare target directories -->
+    <target name="prepare">
+        <mkdir dir="${BUILD}"/>
+        <mkdir dir="${classes}"/>
+        <mkdir dir="${doc}"/>
+    </target>
+
+    <target name="jar">
+        <mkdir dir="${BUILD}/jar"/>
+        <jar destfile="${BUILD}/jar/studentCoursesPlanner.jar" basedir="${BUILD}/classes">
+            <manifest>
+                <attribute name="Main-Class" value="studentCoursesPlanner.driver.Driver"/>
+            </manifest>
+        </jar>
+    </target>
+
+    <!-- ** means all subdirectories as well -->
+    <!-- * means all files in the current directory -->
+    <!-- for just java files use *.java -->
+
+    <target name="studentCoursesPlanner" depends="prepare">
+        <javac includeantruntime="false" srcdir="${src}"
+               includes="studentCoursesPlanner/**"
+               excludes="**/package.html"
+               destdir="${classes}"
+               classpath="${classes}"
+               debug="on"
+               optimize="on"
+               deprecation="off"/>
+    </target>
+
+    <target name="run" depends="jar">
+        <java jar="${BUILD}/jar/studentCoursesPlanner.jar"  fork="true">
+            <arg value="${arg0}"/>
+            <arg value="${arg1}"/>
+            <arg value="${arg2}"/>
+            <arg value="${arg3}"/>
+            <arg value="${arg4}"/>
+        </java>
+    </target>
+    <!-- ** ant to generate javadoc: https://stackoverflow.com/questions/1495982/how-to-generate-javadoc-with-ant-for-an-existing-project-->
+    <target name="doc" depends="prepare" description="generate java docs">
+        <javadoc sourcepath="${src}" destdir="${doc}"/>
+    </target>
+
+</project>
