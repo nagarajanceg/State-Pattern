@@ -1,38 +1,64 @@
 package studentCoursePlanner.state;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 public class InProgress implements State {
     private CoursePlannerState planner;
     private int lpCategory;
-//    public void initialize(){
-//        lpCategory = 0;
-//    }
+    private int DsAlgo;
+    private int Hardware;
+    private int DataAnalytics;
+    private int Elective;
+    public void initialize(){
+        lpCategory = 0;
+        DsAlgo = 0;
+        Hardware = 0;
+        DataAnalytics = 0;
+        Elective = 0;
+    }
     public InProgress(CoursePlannerState plannerIn) {
         this.planner = plannerIn;
-//        initialize();
     }
-    public void updatePrerequisites(){
-        lpCategory = 0;
-        for(String element: planner.getCourse()) {
-            System.out.println("access Long programming enum "+ element);
-            if(this.lpCategory <2) {
-                for (Enum ele : Category.LongProgramming.values()) {
-                    if (element.equals(ele.name())) {
-                        this.lpCategory += 1;
-                    }
-                    System.out.println(ele + " = " + this.lpCategory);
-                }
-            }
-            if (lpCategory >= 2) {
-                planner.setLongProg(true);
-                planner.setState(planner.getGraduated());
+    public boolean validate(String element, Enum[] course){
+        for (Enum ele : course) {
+            if(element.equals(ele.name())){
+                return true;
             }
         }
-
-        if(planner.isLongProg()){
+        return false;
+    }
+    public void categoryValidate(String element){
+        if(validate(element, Category.LongProgramming.values())){
+            this.lpCategory += 1;
+            if( lpCategory >= 2){
+                planner.setLongProg(true);
+            }
+        }
+        if(validate(element, Category.DsAlgo.values())){
+            this.DsAlgo += 1;
+            if (this.DsAlgo >= 2){
+                planner.setDataStructure(true);
+            }
+        }
+    }
+    public void stateCheck(){
+        if(planner.isLongProg() && planner.isDataStructure()){
+            planner.setState(planner.getGraduated());
             System.out.println("graduated");
+        }
+    }
+    public void updatePrerequisites(){
+        initialize();
+        for(String element: planner.getCourse()) {
+            categoryValidate(element);
+//            if(this.lpCategory <2) {
+//                System.out.println(Arrays.asList(Category.LongProgramming.values()).contains(element));
+//            }
+            stateCheck();
         }
     }
 

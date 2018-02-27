@@ -59,6 +59,14 @@ public class CoursePlannerState {
         this.inProgress = inProgress;
     }
 
+    public boolean isDataStructure() {
+        return dataStructure;
+    }
+
+    public void setDataStructure(boolean dataStructure) {
+        this.dataStructure = dataStructure;
+    }
+
     public State getGraduated() {
         return graduated;
     }

@@ -10,8 +10,8 @@ public class Category {
     public enum Hardware{
         I,J,K,L
     }
-    public enum Data{
-        M,N,O,P
+    public enum DataAnalytics {
+        M, N, O, P
     }
     public enum Elective{
         Q,R,S,T,U,V,W,X,Y,Z
