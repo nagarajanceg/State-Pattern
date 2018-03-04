@@ -1,8 +1,8 @@
 package studentCoursePlanner.state;
 
-public class Graduated implements State {
+public class NonGraduated implements State {
     private CoursePlannerState planner;
-    public Graduated(CoursePlannerState coursePlannerState) {
+    public NonGraduated(CoursePlannerState coursePlannerState) {
         this.planner = coursePlannerState;
     }
 

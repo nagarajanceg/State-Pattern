@@ -4,67 +4,49 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CoursePlannerState {
-    State inProgress;
+    State noCourse;
+    State elective;
+    State mandatory;
     State graduated;
-    State notGraduated;
+    State not_graduated;
     List<String> course = null;
     State state;
-    private boolean longProg;
-    private boolean dataStructure;
-    private boolean hardwareSeq;
-    private boolean dataAnalytics;
-    private boolean electives;
+    private boolean mandatoryStatus = false;
+    private boolean electivesStatus = false;
     public CoursePlannerState(){
         course = new ArrayList<>();
         initializeCategory();
-        inProgress = new InProgress(this);
+        noCourse = new NoCourse(this);
+        elective = new Elective(this);
+        mandatory = new Mandatory(this);
         graduated = new Graduated(this);
-        state = inProgress;
+        not_graduated = new NonGraduated(this);
+        state = noCourse;
     }
 
     public List<String> getCourse() {
         return course;
     }
 
-    public void setCourse(List<String> course) {
-        this.course = course;
+    public void setCourse(String course) {
+        this.course.add(course);
     }
 
     private void initializeCategory() {
-        this.longProg = false;
-        this.dataStructure = false;
-        this.hardwareSeq = false;
-        this.dataAnalytics = false;
-        this.electives = false;
-    }
-
-    public boolean isLongProg() {
-        return longProg;
-    }
-
-    public void setLongProg(boolean longProg) {
-        this.longProg = longProg;
+        this.mandatoryStatus = false;
+        this.electivesStatus = false;
     }
 
     public void assign(String course){
-//        System.out.println("course :"+ course);
         state.assignCourse(course);
     }
 
-    public State getInProgress() {
-        return inProgress;
+    public State getMandatory(){
+        return mandatory;
     }
 
-    public void setInProgress(State inProgress) {
-        this.inProgress = inProgress;
-    }
-
-    public boolean isDataStructure() {
-        return dataStructure;
-    }
-
-    public void setDataStructure(boolean dataStructure) {
-        this.dataStructure = dataStructure;
+    public State getElective() {
+        return elective;
     }
 
     public State getGraduated() {
@@ -75,12 +57,36 @@ public class CoursePlannerState {
         this.graduated = graduated;
     }
 
-    public State getNotGraduated() {
-        return notGraduated;
+    public void setElective(State elective) {
+        this.elective = elective;
     }
 
-    public void setNotGraduated(State notGraduated) {
-        this.notGraduated = notGraduated;
+    public void setMandatory(State mandatory) {
+        this.mandatory = mandatory;
+    }
+
+    public State getNot_graduated() {
+        return not_graduated;
+    }
+
+    public void setNot_graduated(State not_graduated) {
+        this.not_graduated = not_graduated;
+    }
+
+    public boolean isMandatoryStatus() {
+        return mandatoryStatus;
+    }
+
+    public void setMandatoryStatus(boolean mandatoryStatus) {
+        this.mandatoryStatus = mandatoryStatus;
+    }
+
+    public boolean isElectivesStatus() {
+        return electivesStatus;
+    }
+
+    public void setElectivesStatus(boolean electivesStatus) {
+        this.electivesStatus = electivesStatus;
     }
 
     public void setState(State stateIn) {

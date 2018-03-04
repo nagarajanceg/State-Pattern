@@ -20,7 +20,6 @@ public class DriverHelper {
         System.out.println("bNumber == "+ bNumber);
 
         for(String ch : course){
-//            System.out.print(ch+" ");
             coursePlanner.assign(ch);
         }
         System.out.println();

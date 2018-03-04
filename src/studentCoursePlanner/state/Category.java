@@ -11,7 +11,7 @@ public class Category {
         I,J,K,L
     }
     public enum DataAnalytics {
-        M, N, O, P
+        M,N,O,P
     }
     public enum Elective{
         Q,R,S,T,U,V,W,X,Y,Z
