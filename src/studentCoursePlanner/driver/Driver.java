@@ -2,11 +2,14 @@ package studentCoursePlanner.driver;
 
 import studentCoursePlanner.state.CoursePlannerState;
 import studentCoursePlanner.utill.DriverHelper;
+import studentCoursePlanner.utill.Results;
 
 public class Driver {
     public static void main(String[] args){
-        DriverHelper drive = new DriverHelper();
+        DriverHelper driver = new DriverHelper();
         CoursePlannerState coursePlanner = new CoursePlannerState();
-        drive.inputFileProcessor("input.txt", coursePlanner);
+        driver.inputFileProcessor("input.txt", coursePlanner);
+        Results result = new Results("output.txt");
+        driver.constructResults(coursePlanner, result);
     }
 }

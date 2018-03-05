@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Queue;
 
 public class CoursePlannerState {
+
     private State elective;
     private State mandatory;
     private State graduated;
@@ -20,11 +21,12 @@ public class CoursePlannerState {
     private Queue<Character> waitList = null;
     private QueueHelper Queue = null;
 
-    public CoursePlannerState(){
+    public CoursePlannerState() {
         course = new ArrayList<>();
         waitList = new LinkedList<>();
-        Queue = new QueueHelper();
-        initializeCategory();
+        Queue = new QueueHelper(this);
+        this.mandatoryStatus = false;
+        this.electivesStatus = false;
         not_graduated = new NotGraduated(this);
         elective = new Elective(this);
         mandatory = new Mandatory(this);
@@ -40,25 +42,14 @@ public class CoursePlannerState {
         this.course.add(course);
     }
 
-    private void initializeCategory() {
-        this.mandatoryStatus = false;
-        this.electivesStatus = false;
-    }
-
-    public void assign(Character course){
+    public void assign(Character course) {
         state.assignCourse(course);
     }
-    public void emptyQueue(){
-        List<Character> temp  = new ArrayList<>();
-        while( this.getWaitList().size() >0){
-            temp.add( this.getWaitList().poll());
-        }
-        System.out.println("remaining elements");
-        for(Character element: temp){
-            System.out.println(element);
-            this.assign(element);
-        }
+
+    public void verifyState() {
+        state.verifyPrerequisiteState();
     }
+
     public Queue<Character> getWaitList() {
         return waitList;
     }
@@ -71,7 +62,7 @@ public class CoursePlannerState {
         this.waitList.add(course);
     }
 
-    public State getMandatory(){
+    public State getMandatory() {
         return mandatory;
     }
 
@@ -125,5 +116,18 @@ public class CoursePlannerState {
 
     public State getState() {
         return state;
+    }
+
+    public String getStateName() {
+//        System.out.println(getState().getClass().getSimpleName());
+        return getState().getClass().getSimpleName();
+    }
+
+    @Override
+    public String toString() {
+        return "CoursePlannerState{" +
+                "state=" + state.getClass().getSimpleName() +
+                ", course=" + course +
+                '}';
     }
 }
