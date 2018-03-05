@@ -52,7 +52,6 @@ public class Elective implements State {
     }
     @Override
     public void assignCourse(Character course) {
-//        planner.setWaitList(course);
         planner.setCourse(course);
         if (isElective(course)){
             planner.setState(planner.getElective());

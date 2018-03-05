@@ -1,7 +1,5 @@
 package studentCoursePlanner.state;
 
-import studentCoursePlanner.utill.CategoryQ;
-
 import java.util.*;
 
 public class CoursePlannerState {
@@ -14,9 +12,7 @@ public class CoursePlannerState {
     private boolean electivesStatus;
 
     private List<Character> course = null;
-//    private Queue<CategoryQ> waitList = null;
     private Queue<Character> waitList = null;
-    private CategoryQ categoryQu = null;
     public CoursePlannerState(){
         course = new ArrayList<>();
         waitList = new LinkedList<>();
@@ -25,7 +21,6 @@ public class CoursePlannerState {
         elective = new Elective(this);
         mandatory = new Mandatory(this);
         graduated = new Graduated(this);
-        categoryQu = new CategoryQ();
         this.setState(not_graduated);
     }
 
@@ -45,23 +40,6 @@ public class CoursePlannerState {
     public void assign(Character course){
         state.assignCourse(course);
     }
-
-    public CategoryQ getCategoryQu() {
-        return categoryQu;
-    }
-
-    public void setCategoryQu(CategoryQ categoryQu) {
-        this.categoryQu = categoryQu;
-    }
-
-//    public Queue<CategoryQ> getWaitList() {
-//        return waitList;
-//    }
-//
-//    public void setWaitList(CategoryQ course) {
-//        this.waitList.add(course);
-//    }
-
 
     public Queue<Character> getWaitList() {
         return waitList;
