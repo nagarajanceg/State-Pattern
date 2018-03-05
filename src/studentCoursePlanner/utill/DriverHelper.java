@@ -3,18 +3,12 @@ package studentCoursePlanner.utill;
 import studentCoursePlanner.state.CoursePlannerState;
 
 import java.io.BufferedReader;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Queue;
 
 public class DriverHelper {
     private FileProcessor fp = null;
-    List<Character> courseList = null;
     private String bNumber;
     public DriverHelper(){
         fp = new FileProcessor();
-        courseList = new ArrayList<Character>();
     }
     public void parseInput(String str, CoursePlannerState coursePlanner){
         bNumber = str.split(":")[0];
@@ -24,6 +18,8 @@ public class DriverHelper {
             coursePlanner.assign(ch.toCharArray()[0]);
         }
         System.out.println();
+        coursePlanner.emptyQueue();
+
         for(Character element: coursePlanner.getCourse()) {
             System.out.print(element);
         }
@@ -34,7 +30,6 @@ public class DriverHelper {
             String line;
             reader = fp.readerDesc(name);
             while((line = fp.readLine(reader))!= null) {
-
                 System.out.println(line);
                 parseInput(line, coursePlanner);
             }

@@ -1,6 +1,11 @@
 package studentCoursePlanner.state;
 
-import java.util.*;
+import studentCoursePlanner.utill.QueueHelper;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
 
 public class CoursePlannerState {
     private State elective;
@@ -13,9 +18,12 @@ public class CoursePlannerState {
 
     private List<Character> course = null;
     private Queue<Character> waitList = null;
+    private QueueHelper Queue = null;
+
     public CoursePlannerState(){
         course = new ArrayList<>();
         waitList = new LinkedList<>();
+        Queue = new QueueHelper();
         initializeCategory();
         not_graduated = new NotGraduated(this);
         elective = new Elective(this);
@@ -40,9 +48,23 @@ public class CoursePlannerState {
     public void assign(Character course){
         state.assignCourse(course);
     }
-
+    public void emptyQueue(){
+        List<Character> temp  = new ArrayList<>();
+        while( this.getWaitList().size() >0){
+            temp.add( this.getWaitList().poll());
+        }
+        System.out.println("remaining elements");
+        for(Character element: temp){
+            System.out.println(element);
+            this.assign(element);
+        }
+    }
     public Queue<Character> getWaitList() {
         return waitList;
+    }
+
+    public QueueHelper getQueue() {
+        return Queue;
     }
 
     public void setWaitList(Character course) {
@@ -99,5 +121,9 @@ public class CoursePlannerState {
 
     public void setState(State stateIn) {
         this.state = stateIn;
+    }
+
+    public State getState() {
+        return state;
     }
 }

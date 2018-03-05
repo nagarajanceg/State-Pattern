@@ -1,5 +1,7 @@
 package studentCoursePlanner.state;
 
+import studentCoursePlanner.utill.QueueHelper;
+
 public class Mandatory implements State {
 
     private CoursePlannerState planner;
@@ -7,15 +9,7 @@ public class Mandatory implements State {
     private int dsAlgo = 0;
     private int hardware =0 ;
     private int dataAnalytics=0;
-    private int c1Min = (int)'A';
-    private int c1Max = (int)'D';
-    private int c2Min = (int)'E';
-    private int c2Max = (int)'H';
-    private int c3Min = (int)'I';
-    private int c3Max = (int)'L';
-    private int c4Min = (int)'M';
-    private int c4Max = (int)'P';
-
+    private QueueHelper Queue = null;
     public void initialize(){
         lpCategory = 0;
         dsAlgo = 0;
@@ -24,6 +18,7 @@ public class Mandatory implements State {
     }
     public Mandatory(CoursePlannerState coursePlannerStateIn){
         this.planner = coursePlannerStateIn;
+        this.Queue = coursePlannerStateIn.getQueue();
     }
     public boolean isElective(Character course){
         for(Enum ele: Category.Elective.values()) {
@@ -41,7 +36,7 @@ public class Mandatory implements State {
     }
     public void stateCheck(){
         getAllCategoryStatus();
-        if(!planner.isMandatoryStatus() && planner.isElectivesStatus()){
+        if(planner.isMandatoryStatus() && planner.isElectivesStatus()){
             planner.setState(planner.getGraduated());
             System.out.println("Graduated");
         }else{
@@ -70,42 +65,12 @@ public class Mandatory implements State {
         if(validate(element, Category.DataAnalytics.values())){
             this.dataAnalytics += 1;
         }
-
     }
     public void updatePrerequisites(){
         initialize();
         for(Character element: planner.getCourse()) {
             categoryValidate(element);
             stateCheck();
-        }
-    }
-    public void updateDetails(Character element){
-        planner.setCourse(element);
-        planner.getWaitList().remove(element);
-    }
-    public void dispatchQueue(){
-        System.out.println("dispatch Queue");
-        for(Character element: planner.getWaitList()) {
-            if(element>= c1Min && element<c1Max){
-                c1Min = (int) element;
-                c1Max = (int) 'E';
-               this.updateDetails(element);
-            }
-            if(element>= c2Min && element<c2Max){
-                c2Min = (int) element;
-                c2Max = (int) 'I';
-                this.updateDetails(element);
-            }
-            if(element>= c3Min && element<c3Max){
-                c3Min = (int) element;
-                c3Max = (int) 'M';
-                this.updateDetails(element);
-            }
-            if(element>= c4Min && element<c4Max){
-                c4Min = (int) element;
-                c4Max = (int) 'Q';
-                this.updateDetails(element);
-            }
         }
     }
 
@@ -117,7 +82,7 @@ public class Mandatory implements State {
             return;
         }
         planner.getWaitList().add(course);
-        dispatchQueue();
+        Queue.dispatch(planner);
         planner.setState(planner.getMandatory());
         this.updatePrerequisites();
         System.out.println("mandatory Course");

@@ -1,12 +1,14 @@
 package studentCoursePlanner.state;
 
+import studentCoursePlanner.utill.QueueHelper;
+
 public class NotGraduated implements State {
     private CoursePlannerState planner;
     private int lpCategory;
     private int dsAlgo;
     private int hardware;
     private int dataAnalytics;
-
+    private QueueHelper Queue = null;
     public void initialize(){
         lpCategory = 0;
         dsAlgo = 0;
@@ -15,6 +17,7 @@ public class NotGraduated implements State {
     }
     public NotGraduated(CoursePlannerState coursePlannerStateIn) {
         this.planner = coursePlannerStateIn;
+        this.Queue = planner.getQueue();
     }
 
     @Override
@@ -27,10 +30,15 @@ public class NotGraduated implements State {
                 return;
             }
         }
-//        planner.setWaitList(course);
-//        dispatchQueue();
-        planner.setCourse(course);
+        planner.setWaitList(course);
+        Queue.dispatch(planner);
+//        planner.setCourse(course);
         planner.setState(planner.getMandatory());
+    }
+
+    @Override
+    public void updatePrerequisites() {
+
     }
 
 }
