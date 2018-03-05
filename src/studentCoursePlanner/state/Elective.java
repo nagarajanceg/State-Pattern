@@ -11,48 +11,48 @@ public class Elective implements State {
         electiveCategory = 0;
     }
 
-    public boolean isElective(String course){
+    public boolean isElective(Character course){
         for(Enum ele: Category.Elective.values()) {
-            if (course.equals(ele.name())) {
+            if (course == ele.name().charAt(0)) {
                 return true;
             }
         }
         return false;
     }
-    public boolean validate(String element, Enum[] course){
+    public boolean validate(Character element, Enum[] course){
         for (Enum ele : course) {
-            if(element.equals(ele.name())){
+            if(element == ele.name().charAt(0)){
                 return true;
             }
         }
         return false;
     }
-    public void categoryValidate(String element) {
+    public void categoryValidate(Character element) {
         if (validate(element, Category.Elective.values())) {
             this.electiveCategory += 1;
         }
         if (this.electiveCategory >=2){
             planner.setElectivesStatus(true);
         }
-        this.stateCheck();
     }
     public void stateCheck(){
         if(!planner.isMandatoryStatus() && planner.isElectivesStatus()){
             planner.setState(planner.getGraduated());
-            System.out.println("graduated");
+            System.out.println("graduated in elective");
         }else{
             planner.setState(planner.getElective());
         }
     }
     public void updatePrerequisites(){
         initialize();
-        for(String element: planner.getCourse()) {
+        for(Character element: planner.getCourse()) {
             categoryValidate(element);
             stateCheck();
         }
     }
     @Override
-    public void assignCourse(String course) {
+    public void assignCourse(Character course) {
+//        planner.setWaitList(course);
         planner.setCourse(course);
         if (isElective(course)){
             planner.setState(planner.getElective());

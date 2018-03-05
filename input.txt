@@ -1,1 +1,1 @@
-1234: A B E F I J M Q R P L
+1234: F B A D

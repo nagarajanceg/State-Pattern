@@ -7,7 +7,7 @@ public class Graduated implements State {
     }
 
     @Override
-    public void assignCourse(String str) {
+    public void assignCourse(Character str) {
 
     }
 }

@@ -1,34 +1,39 @@
 package studentCoursePlanner.state;
 
-import java.util.ArrayList;
-import java.util.List;
+import studentCoursePlanner.utill.CategoryQ;
+
+import java.util.*;
 
 public class CoursePlannerState {
-    State noCourse;
-    State elective;
-    State mandatory;
-    State graduated;
-    State not_graduated;
-    List<String> course = null;
-    State state;
-    private boolean mandatoryStatus = false;
-    private boolean electivesStatus = false;
+    private State elective;
+    private State mandatory;
+    private State graduated;
+    private State not_graduated;
+    private State state;
+    private boolean mandatoryStatus;
+    private boolean electivesStatus;
+
+    private List<Character> course = null;
+//    private Queue<CategoryQ> waitList = null;
+    private Queue<Character> waitList = null;
+    private CategoryQ categoryQu = null;
     public CoursePlannerState(){
         course = new ArrayList<>();
+        waitList = new LinkedList<>();
         initializeCategory();
-        noCourse = new NoCourse(this);
+        not_graduated = new NotGraduated(this);
         elective = new Elective(this);
         mandatory = new Mandatory(this);
         graduated = new Graduated(this);
-        not_graduated = new NonGraduated(this);
-        state = noCourse;
+        categoryQu = new CategoryQ();
+        this.setState(not_graduated);
     }
 
-    public List<String> getCourse() {
+    public List<Character> getCourse() {
         return course;
     }
 
-    public void setCourse(String course) {
+    public void setCourse(Character course) {
         this.course.add(course);
     }
 
@@ -37,8 +42,33 @@ public class CoursePlannerState {
         this.electivesStatus = false;
     }
 
-    public void assign(String course){
+    public void assign(Character course){
         state.assignCourse(course);
+    }
+
+    public CategoryQ getCategoryQu() {
+        return categoryQu;
+    }
+
+    public void setCategoryQu(CategoryQ categoryQu) {
+        this.categoryQu = categoryQu;
+    }
+
+//    public Queue<CategoryQ> getWaitList() {
+//        return waitList;
+//    }
+//
+//    public void setWaitList(CategoryQ course) {
+//        this.waitList.add(course);
+//    }
+
+
+    public Queue<Character> getWaitList() {
+        return waitList;
+    }
+
+    public void setWaitList(Character course) {
+        this.waitList.add(course);
     }
 
     public State getMandatory(){

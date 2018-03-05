@@ -4,7 +4,9 @@ import studentCoursePlanner.state.CoursePlannerState;
 
 import java.io.BufferedReader;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Queue;
 
 public class DriverHelper {
     private FileProcessor fp = null;
@@ -18,11 +20,13 @@ public class DriverHelper {
         bNumber = str.split(":")[0];
         String[] course = str.split(":")[1].trim().split(" ");
         System.out.println("bNumber == "+ bNumber);
-
         for(String ch : course){
-            coursePlanner.assign(ch);
+            coursePlanner.assign(ch.toCharArray()[0]);
         }
         System.out.println();
+        for(Character element: coursePlanner.getCourse()) {
+            System.out.print(element);
+        }
     }
     public void inputFileProcessor(String name, CoursePlannerState coursePlanner){
         BufferedReader reader;
