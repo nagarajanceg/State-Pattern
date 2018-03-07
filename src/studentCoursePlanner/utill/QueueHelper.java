@@ -21,13 +21,19 @@ public class QueueHelper {
         this.planner = plannerIn;
     }
 
+    /**
+     *
+     * @param element
+     */
     public void updateDetails(Character element) {
         planner.setCourse(element);
         planner.getWaitList().remove(element);
     }
 
+    /**
+     * Queue dispatch conditions
+     */
     public void dispatch() {
-        System.out.println("dispatch Queue");
         for (Character element : planner.getWaitList()) {
             if (element >= c1Min && element < c1Max) {
                 c1Min = (int) element;
@@ -52,6 +58,9 @@ public class QueueHelper {
         }
     }
 
+    /**
+     * Empty the Queue logic
+     */
     public void emptyQueue() {
         List<Character> temp = new ArrayList<>();
         while (planner.getWaitList().size() > 0) {

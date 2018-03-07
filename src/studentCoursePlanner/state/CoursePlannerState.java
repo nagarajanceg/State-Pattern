@@ -1,6 +1,7 @@
 package studentCoursePlanner.state;
 
 import studentCoursePlanner.utill.QueueHelper;
+import studentCoursePlanner.utill.StateHelper;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -16,6 +17,7 @@ public class CoursePlannerState {
     private State state;
     private boolean mandatoryStatus;
     private boolean electivesStatus;
+    private StateHelper helper = null;
 
     private List<Character> course = null;
     private Queue<Character> waitList = null;
@@ -27,10 +29,12 @@ public class CoursePlannerState {
         Queue = new QueueHelper(this);
         this.mandatoryStatus = false;
         this.electivesStatus = false;
+        helper = new StateHelper();
         not_graduated = new NotGraduated(this);
         elective = new Elective(this);
         mandatory = new Mandatory(this);
         graduated = new Graduated(this);
+
         this.setState(not_graduated);
     }
 
@@ -72,6 +76,10 @@ public class CoursePlannerState {
 
     public State getGraduated() {
         return graduated;
+    }
+
+    public StateHelper getHelper() {
+        return helper;
     }
 
     public void setGraduated(State graduated) {
@@ -119,7 +127,6 @@ public class CoursePlannerState {
     }
 
     public String getStateName() {
-//        System.out.println(getState().getClass().getSimpleName());
         return getState().getClass().getSimpleName();
     }
 

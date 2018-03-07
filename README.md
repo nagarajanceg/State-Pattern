@@ -37,6 +37,12 @@ as many semester as he wanted.
 3) At the end of the preference list processing, elements remaining in the Queue is tried once to assign the courses if it
 follows the constraints and change the states accordingly.
 
+Example: 
+1234:A B E F I O W J Q R P sem 4: Graduated - All Categories satisfied.
+
+1234:A B E F I O W J Q R NotGraduated 
+   In the category M-P, O arrives first and assign in the list because it's than the max of that category and the 
+   student should take P to finish that category.  
 
 State Implementation:
 I am having 4 states
@@ -45,6 +51,8 @@ Graduated - Final State
 Intermediate - Mandatory, Elective States
 
 Suppose if the student is not graduated after assigning all his preference list then he moved back to the initial stage 
-NotGraduated.
+NotGraduated after processing all the preference inputs.
 
-State Transitions        
+
+
+

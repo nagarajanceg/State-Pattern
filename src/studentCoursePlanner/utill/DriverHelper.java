@@ -14,33 +14,49 @@ public class DriverHelper {
         fp = new FileProcessor();
     }
 
+    /**
+     *
+     * @param plannerIn
+     * @param resultsIn
+     */
     public void constructResults(CoursePlannerState plannerIn, Results resultsIn) {
-        System.out.println("Construct Results");
         String state = plannerIn.getStateName();
         List<Character> course = plannerIn.getCourse();
-        String res = bNumber+":";
-        int sem = course.size() / 3;
-
+        StringBuffer result =new StringBuffer();
+        result.append(bNumber+":");
+        int sem = course.size();
         if (sem % 3 != 0) {
-            sem =  + 1;
+            sem  = sem/3;
+            sem +=  1;
+        }else {
+            sem = sem/3;
         }
 
         for (Character ch : course) {
-            res += ch + " ";
+            result.append(ch + " ");
         }
         if (!state.equals("NotGraduated")){
-            res += "sem " + sem+": "+ state;
+            result.append("sem " + sem+": "+ state);
         }else{
-            res += state;
+            result.append(state);
         }
-        resultsIn.writeInFile(res);
+        resultsIn.writeInFile(result.toString());
         resultsIn.close();
     }
 
-    public void parseInput(String str, CoursePlannerState coursePlanner) {
+    /**
+     *
+     * @param str
+     * @param coursePlanner
+     */
+    private void parseInput(String str, CoursePlannerState coursePlanner) {
         bNumber = str.split(":")[0];
         String[] course = str.split(":")[1].trim().split(" ");
         for (String ch : course) {
+            if(coursePlanner.getStateName().equals("Graduated")){
+                break;
+            }
+            System.out.println(ch);
             coursePlanner.assign(ch.toCharArray()[0]);
         }
         System.out.println();
@@ -50,6 +66,11 @@ public class DriverHelper {
         }
     }
 
+    /**
+     *
+     * @param name
+     * @param coursePlanner
+     */
     public void inputFileProcessor(String name, CoursePlannerState coursePlanner) {
         BufferedReader reader;
         try {

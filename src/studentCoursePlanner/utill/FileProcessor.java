@@ -3,7 +3,11 @@ package studentCoursePlanner.utill;
 import java.io.*;
 
 public class FileProcessor {
-
+    /**
+     *
+     * @param name
+     * @return
+     */
     public BufferedReader readerDesc(String name) {
         FileInputStream fp = null;
         BufferedReader reader = null;
@@ -20,6 +24,11 @@ public class FileProcessor {
         return reader;
     }
 
+    /**
+     *
+     * @param reader
+     * @return
+     */
     public String readLine(BufferedReader reader) {
         if (reader == null) {
             return null;

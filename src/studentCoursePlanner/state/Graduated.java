@@ -10,12 +10,6 @@ public class Graduated implements State {
 
     @Override
     public void assignCourse(Character str) {
-
-    }
-
-    @Override
-    public void updatePrerequisites() {
-
     }
 
     @Override

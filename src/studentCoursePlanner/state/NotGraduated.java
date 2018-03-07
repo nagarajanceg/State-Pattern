@@ -1,34 +1,30 @@
 package studentCoursePlanner.state;
 
 import studentCoursePlanner.utill.QueueHelper;
+import studentCoursePlanner.utill.StateHelper;
 
 public class NotGraduated implements State {
 
     private CoursePlannerState planner;
     private QueueHelper Queue = null;
+    private StateHelper helper = null;
 
     public NotGraduated(CoursePlannerState coursePlannerStateIn) {
         this.planner = coursePlannerStateIn;
-        this.Queue = planner.getQueue();
+        this.Queue = coursePlannerStateIn.getQueue();
+        this.helper = coursePlannerStateIn.getHelper();
     }
 
     @Override
     public void assignCourse(Character course) {
-        for (Enum ele : Category.Elective.values()) {
-            if (course == ele.name().charAt(0)) {
-                planner.setCourse(course);
-                planner.setState(planner.getElective());
-                return;
-            }
+        if (helper.isElective(course)) {
+            planner.setCourse(course);
+            planner.setState(planner.getElective());
+            return;
         }
         planner.setWaitList(course);
         Queue.dispatch();
         planner.setState(planner.getMandatory());
-    }
-
-    @Override
-    public void updatePrerequisites() {
-
     }
 
     @Override

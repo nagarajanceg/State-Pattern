@@ -14,7 +14,7 @@ public class Results implements FileDisplayInterface, StdoutDisplayInterface {
         this.initialize(name);
     }
 
-    public void initialize(String fileName) {
+    private void initialize(String fileName) {
         try {
             fp = new FileOutputStream(fileName);
             writer = new BufferedWriter(new OutputStreamWriter(fp));
@@ -22,9 +22,7 @@ public class Results implements FileDisplayInterface, StdoutDisplayInterface {
             System.out.println("File not found");
             e.printStackTrace();
         } finally {
-            if (fp != null) {
 
-            }
         }
     }
 

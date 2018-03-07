@@ -1,6 +1,7 @@
 package studentCoursePlanner.state;
 
 import studentCoursePlanner.utill.QueueHelper;
+import studentCoursePlanner.utill.StateHelper;
 
 public class Mandatory implements State {
 
@@ -10,77 +11,78 @@ public class Mandatory implements State {
     private int hardware = 0;
     private int dataAnalytics = 0;
     private QueueHelper Queue = null;
+    private StateHelper helper = null;
 
-    public void initialize() {
+    private void initialize() {
         lpCategory = 0;
         dsAlgo = 0;
         hardware = 0;
         dataAnalytics = 0;
     }
 
+    /**
+     *
+     * @param coursePlannerStateIn
+     */
     public Mandatory(CoursePlannerState coursePlannerStateIn) {
         this.planner = coursePlannerStateIn;
         this.Queue = coursePlannerStateIn.getQueue();
+        this.helper = coursePlannerStateIn.getHelper();
     }
 
-    public boolean isElective(Character course) {
-        for (Enum ele : Category.Elective.values()) {
-            if (course == ele.name().charAt(0)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public void getAllCategoryStatus() {
-        System.out.println(lpCategory + " " + dsAlgo + " " + hardware + " " + dataAnalytics);
+    /**
+     * Check the category course assigned values and set status
+     */
+    private void getAllCategoryStatus() {
         if (lpCategory >= 2 && dsAlgo >= 2 && hardware >= 2 && dataAnalytics >= 2) {
             planner.setMandatoryStatus(true);
         }
     }
 
+    /**
+     * To verify and make sure status moved graduated
+     */
     public void verifyPrerequisiteState() {
         Queue.emptyQueue();
         if (!(planner.isMandatoryStatus() && planner.isElectivesStatus())) {
             planner.setState(planner.getNot_graduated());
         }
     }
-
-    public void stateCheck() {
+    /**
+     * Check the category status and made transition to the state
+     */
+    private void stateCheck() {
         getAllCategoryStatus();
         if (planner.isMandatoryStatus() && planner.isElectivesStatus()) {
             planner.setState(planner.getGraduated());
-            System.out.println("Graduated");
         } else {
             planner.setState(planner.getMandatory());
         }
     }
 
-    public boolean validate(Character element, Enum[] course) {
-        for (Enum ele : course) {
-            if (element == ele.name().charAt(0)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public void categoryValidate(Character element) {
-        if (validate(element, Category.LongProgramming.values())) {
+    /**
+     *
+     * @param element- course name
+     * Add up the corresponding categories
+     */
+    private void categoryValidate(Character element) {
+        if (helper.validate(element, Category.LongProgramming.values())) {
             this.lpCategory += 1;
         }
-        if (validate(element, Category.DsAlgo.values())) {
+        if (helper.validate(element, Category.DsAlgo.values())) {
             this.dsAlgo += 1;
         }
-        if (validate(element, Category.Hardware.values())) {
+        if (helper.validate(element, Category.Hardware.values())) {
             this.hardware += 1;
         }
-        if (validate(element, Category.DataAnalytics.values())) {
+        if (helper.validate(element, Category.DataAnalytics.values())) {
             this.dataAnalytics += 1;
         }
     }
-
-    public void updatePrerequisites() {
+    /**
+     * update the category counts and state
+     */
+    private void updatePrerequisites() {
         initialize();
         for (Character element : planner.getCourse()) {
             categoryValidate(element);
@@ -90,7 +92,7 @@ public class Mandatory implements State {
 
     @Override
     public void assignCourse(Character course) {
-        if (isElective(course)) {
+        if (helper.isElective(course)) {
             planner.setCourse(course);
             planner.setState(planner.getElective());
             return;
