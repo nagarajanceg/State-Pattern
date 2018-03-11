@@ -52,7 +52,6 @@ public class Mandatory implements CoursePlannerStateI {
      * Check the category status and made transition to the state
      */
     private void stateCheck() {
-        getAllCategoryStatus();
         if (planner.isMandatoryStatus() && planner.isElectivesStatus()) {
             planner.setCoursePlannerStateI(planner.getGraduated());
         } else {
@@ -82,12 +81,13 @@ public class Mandatory implements CoursePlannerStateI {
     /**
      * update the category counts and state
      */
-    private void updatePrerequisites() {
+    public void updatePrerequisites() {
         initialize();
         for (Character element : planner.getCourse()) {
             categoryValidate(element);
-            stateCheck();
         }
+        getAllCategoryStatus();
+        stateCheck();
     }
 
     @Override
@@ -100,7 +100,6 @@ public class Mandatory implements CoursePlannerStateI {
         planner.getWaitList().add(course);
         Queue.dispatch();
         planner.setCoursePlannerStateI(planner.getMandatory());
-        this.updatePrerequisites();
     }
 
     @Override

@@ -17,6 +17,11 @@ public class Graduated implements CoursePlannerStateI {
     }
 
     @Override
+    public void updatePrerequisites() {
+
+    }
+
+    @Override
     public String toString() {
         return "Graduated{ CoursePlannerStateI" + '}';
     }

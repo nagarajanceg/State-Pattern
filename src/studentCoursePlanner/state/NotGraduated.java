@@ -35,6 +35,11 @@ public class NotGraduated implements CoursePlannerStateI {
     }
 
     @Override
+    public void updatePrerequisites() {
+
+    }
+
+    @Override
     public String toString() {
         return "NotGraduated{" +
                 "planner=" + this.getClass().getSimpleName() +

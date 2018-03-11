@@ -5,4 +5,6 @@ public interface CoursePlannerStateI {
     void assignCourse(Character ch);
 
     void verifyPrerequisiteState();
+
+    void updatePrerequisites();
 }

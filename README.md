@@ -27,26 +27,27 @@ ant -buildfile src/build.xml doc
  offense."
  [Date:03/11/2018]
 ------------------------------------------------------------------------
-Queue implementation is done to maintain the constraints for the category.
-Here My assumption in the Queue
-1) Last Element in the Category (Say D in Long programming) will never assigned until it get any course before as a 
-pre-requisite like(A,B,C). Once the Course B is assigned A is not allowed to assign in future. I followed this approach
-through out my Queue.
-2) Electives won't enter this queue and it will directly assign to the course list. Since the student is allowed to study
-as many semester as he wanted. It is granted to take many electives.
-3) At the end of the preference list processing, elements remaining in the Queue is tried once to assign the courses if 
-it follows the constraints and change the states accordingly.
 
 Data Structure used:
 ArrayList used for holding the courses
 Queue is used to implement the course wait list 
 
+Queue implementation is done to maintain the constraints for the category.
+Here My assumption in the Queue
+1) Last Element in the Category (Say D in Long programming) will never assigned until it get any course before as a 
+pre-requisite like(A,B,C). Once the Course B is assigned A is not allowed to assign in future. So the student should 
+enroll either C or D to be graduated. I followed this approach through out my Queue. 
+2) Electives won't enter this queue and it will directly assign to the course list. Since the student is allowed to study
+as many semester as he wanted. It is granted to take as many electives as a student can.
+3) At the end of the preference list processing, elements remaining in the Queue is tried once to assign the courses if 
+it follows the constraints and change the states accordingly.
+
 Example: 
 1234:A B E F I O W J Q R P sem 4: Graduated - All Categories satisfied.
 
 1234:A B E F I O W J Q R NotGraduated 
-   In the category M-P, O arrives first and assign in the list because it's than the max of that category and the 
-   student should take P to finish that category.  
+   In the category M-P, O arrives first and assign in the list because it's less than the max(P) of that category and the 
+   student should take P to finish that category.
 
 State Implementation:
 I am having 4 states

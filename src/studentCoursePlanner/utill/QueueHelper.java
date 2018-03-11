@@ -4,6 +4,7 @@ import studentCoursePlanner.state.CoursePlannerState;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Queue;
 
 public class QueueHelper {
 
@@ -39,21 +40,25 @@ public class QueueHelper {
                 c1Min = (int) element;
                 c1Max = (int) 'E';
                 this.updateDetails(element);
+                break;
             }
             if (element >= c2Min && element < c2Max) {
                 c2Min = (int) element;
                 c2Max = (int) 'I';
                 this.updateDetails(element);
+                break;
             }
             if (element >= c3Min && element < c3Max) {
                 c3Min = (int) element;
                 c3Max = (int) 'M';
                 this.updateDetails(element);
+                break;
             }
             if (element >= c4Min && element < c4Max) {
                 c4Min = (int) element;
                 c4Max = (int) 'Q';
                 this.updateDetails(element);
+                break;
             }
         }
     }
@@ -62,8 +67,12 @@ public class QueueHelper {
      * Empty the Queue logic
      */
     public void emptyQueue() {
+        List<Character> temp = new ArrayList<>();
         while (planner.getWaitList().size() > 0) {
-            planner.assign(planner.getWaitList().poll());
+            temp.add(planner.getWaitList().poll());
+        }
+        for (Character element : temp) {
+            planner.assign(element);
         }
     }
 

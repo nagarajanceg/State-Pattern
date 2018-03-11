@@ -48,6 +48,7 @@ public class CoursePlannerState {
 
     public void assign(Character course) {
         coursePlannerStateI.assignCourse(course);
+        coursePlannerStateI.updatePrerequisites();
     }
 
     public void verifyState() {

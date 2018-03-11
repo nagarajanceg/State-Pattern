@@ -58,12 +58,12 @@ public class Elective implements CoursePlannerStateI {
     /**
      * update the category counts and state
      */
-    private void updatePrerequisites() {
+    public void updatePrerequisites() {
         initialize();
         for (Character element : planner.getCourse()) {
             categoryValidate(element);
-            stateCheck();
         }
+        stateCheck();
     }
 
     /**
@@ -75,7 +75,7 @@ public class Elective implements CoursePlannerStateI {
         if (helper.isElective(course)) {
             planner.setCoursePlannerStateI(planner.getElective());
             planner.setCourse(course);
-            this.updatePrerequisites();
+//            this.updatePrerequisites();
             return;
         }
         planner.getWaitList().add(course);
