@@ -1,4 +1,4 @@
-<project name="studentCoursesPlanner" default="compile_all" basedir="..">
+<project name="studentCoursePlanner" default="compile_all" basedir="..">
 
     <property name="BUILD.compiler"       value="modern"/>
     <property name="src"                  value="src"/>
@@ -9,7 +9,7 @@
     <target name="all" depends="compile_all"/>
 
     <target name="compile_all"
-            depends="studentCoursesPlanner"/>
+            depends="studentCoursePlanner"/>
 
     <target name="clean">
         <delete dir="${BUILD}"/>
@@ -25,9 +25,9 @@
 
     <target name="jar">
         <mkdir dir="${BUILD}/jar"/>
-        <jar destfile="${BUILD}/jar/studentCoursesPlanner.jar" basedir="${BUILD}/classes">
+        <jar destfile="${BUILD}/jar/studentCoursePlanner.jar" basedir="${BUILD}/classes">
             <manifest>
-                <attribute name="Main-Class" value="studentCoursesPlanner.driver.Driver"/>
+                <attribute name="Main-Class" value="studentCoursePlanner.driver.Driver"/>
             </manifest>
         </jar>
     </target>
@@ -36,9 +36,9 @@
     <!-- * means all files in the current directory -->
     <!-- for just java files use *.java -->
 
-    <target name="studentCoursesPlanner" depends="prepare">
+    <target name="studentCoursePlanner" depends="prepare">
         <javac includeantruntime="false" srcdir="${src}"
-               includes="studentCoursesPlanner/**"
+               includes="studentCoursePlanner/**"
                excludes="**/package.html"
                destdir="${classes}"
                classpath="${classes}"
@@ -48,12 +48,9 @@
     </target>
 
     <target name="run" depends="jar">
-        <java jar="${BUILD}/jar/studentCoursesPlanner.jar"  fork="true">
+        <java jar="${BUILD}/jar/studentCoursePlanner.jar"  fork="true">
             <arg value="${arg0}"/>
             <arg value="${arg1}"/>
-            <arg value="${arg2}"/>
-            <arg value="${arg3}"/>
-            <arg value="${arg4}"/>
         </java>
     </target>
     <!-- ** ant to generate javadoc: https://stackoverflow.com/questions/1495982/how-to-generate-javadoc-with-ant-for-an-existing-project-->

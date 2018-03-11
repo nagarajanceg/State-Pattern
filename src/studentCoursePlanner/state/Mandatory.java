@@ -3,7 +3,7 @@ package studentCoursePlanner.state;
 import studentCoursePlanner.utill.QueueHelper;
 import studentCoursePlanner.utill.StateHelper;
 
-public class Mandatory implements State {
+public class Mandatory implements CoursePlannerStateI {
 
     private CoursePlannerState planner;
     private int lpCategory = 0;
@@ -45,7 +45,7 @@ public class Mandatory implements State {
     public void verifyPrerequisiteState() {
         Queue.emptyQueue();
         if (!(planner.isMandatoryStatus() && planner.isElectivesStatus())) {
-            planner.setState(planner.getNot_graduated());
+            planner.setCoursePlannerStateI(planner.getNot_graduated());
         }
     }
     /**
@@ -54,9 +54,9 @@ public class Mandatory implements State {
     private void stateCheck() {
         getAllCategoryStatus();
         if (planner.isMandatoryStatus() && planner.isElectivesStatus()) {
-            planner.setState(planner.getGraduated());
+            planner.setCoursePlannerStateI(planner.getGraduated());
         } else {
-            planner.setState(planner.getMandatory());
+            planner.setCoursePlannerStateI(planner.getMandatory());
         }
     }
 
@@ -94,12 +94,12 @@ public class Mandatory implements State {
     public void assignCourse(Character course) {
         if (helper.isElective(course)) {
             planner.setCourse(course);
-            planner.setState(planner.getElective());
+            planner.setCoursePlannerStateI(planner.getElective());
             return;
         }
         planner.getWaitList().add(course);
         Queue.dispatch();
-        planner.setState(planner.getMandatory());
+        planner.setCoursePlannerStateI(planner.getMandatory());
         this.updatePrerequisites();
     }
 

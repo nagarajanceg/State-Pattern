@@ -10,11 +10,11 @@ import java.util.Queue;
 
 public class CoursePlannerState {
 
-    private State elective;
-    private State mandatory;
-    private State graduated;
-    private State not_graduated;
-    private State state;
+    private CoursePlannerStateI elective;
+    private CoursePlannerStateI mandatory;
+    private CoursePlannerStateI graduated;
+    private CoursePlannerStateI not_graduated;
+    private CoursePlannerStateI coursePlannerStateI;
     private boolean mandatoryStatus;
     private boolean electivesStatus;
     private StateHelper helper = null;
@@ -35,7 +35,7 @@ public class CoursePlannerState {
         mandatory = new Mandatory(this);
         graduated = new Graduated(this);
 
-        this.setState(not_graduated);
+        this.setCoursePlannerStateI(not_graduated);
     }
 
     public List<Character> getCourse() {
@@ -47,11 +47,11 @@ public class CoursePlannerState {
     }
 
     public void assign(Character course) {
-        state.assignCourse(course);
+        coursePlannerStateI.assignCourse(course);
     }
 
     public void verifyState() {
-        state.verifyPrerequisiteState();
+        coursePlannerStateI.verifyPrerequisiteState();
     }
 
     public Queue<Character> getWaitList() {
@@ -66,15 +66,15 @@ public class CoursePlannerState {
         this.waitList.add(course);
     }
 
-    public State getMandatory() {
+    public CoursePlannerStateI getMandatory() {
         return mandatory;
     }
 
-    public State getElective() {
+    public CoursePlannerStateI getElective() {
         return elective;
     }
 
-    public State getGraduated() {
+    public CoursePlannerStateI getGraduated() {
         return graduated;
     }
 
@@ -82,23 +82,23 @@ public class CoursePlannerState {
         return helper;
     }
 
-    public void setGraduated(State graduated) {
+    public void setGraduated(CoursePlannerStateI graduated) {
         this.graduated = graduated;
     }
 
-    public void setElective(State elective) {
+    public void setElective(CoursePlannerStateI elective) {
         this.elective = elective;
     }
 
-    public void setMandatory(State mandatory) {
+    public void setMandatory(CoursePlannerStateI mandatory) {
         this.mandatory = mandatory;
     }
 
-    public State getNot_graduated() {
+    public CoursePlannerStateI getNot_graduated() {
         return not_graduated;
     }
 
-    public void setNot_graduated(State not_graduated) {
+    public void setNot_graduated(CoursePlannerStateI not_graduated) {
         this.not_graduated = not_graduated;
     }
 
@@ -118,22 +118,22 @@ public class CoursePlannerState {
         this.electivesStatus = electivesStatus;
     }
 
-    public void setState(State stateIn) {
-        this.state = stateIn;
+    public void setCoursePlannerStateI(CoursePlannerStateI coursePlannerStateIIn) {
+        this.coursePlannerStateI = coursePlannerStateIIn;
     }
 
-    public State getState() {
-        return state;
+    public CoursePlannerStateI getCoursePlannerStateI() {
+        return coursePlannerStateI;
     }
 
     public String getStateName() {
-        return getState().getClass().getSimpleName();
+        return getCoursePlannerStateI().getClass().getSimpleName();
     }
 
     @Override
     public String toString() {
         return "CoursePlannerState{" +
-                "state=" + state.getClass().getSimpleName() +
+                "coursePlannerStateI=" + coursePlannerStateI.getClass().getSimpleName() +
                 ", course=" + course +
                 '}';
     }

@@ -3,7 +3,7 @@ package studentCoursePlanner.state;
 import studentCoursePlanner.utill.QueueHelper;
 import studentCoursePlanner.utill.StateHelper;
 
-public class Elective implements State {
+public class Elective implements CoursePlannerStateI {
 
     private CoursePlannerState planner;
     private int electiveCategory;
@@ -27,7 +27,7 @@ public class Elective implements State {
     public void verifyPrerequisiteState() {
         Queue.emptyQueue();
         if (!(planner.isMandatoryStatus() && planner.isElectivesStatus())) {
-            planner.setState(planner.getNot_graduated());
+            planner.setCoursePlannerStateI(planner.getNot_graduated());
         }
     }
 
@@ -49,9 +49,9 @@ public class Elective implements State {
      */
     public void stateCheck() {
         if (planner.isMandatoryStatus() && planner.isElectivesStatus()) {
-            planner.setState(planner.getGraduated());
+            planner.setCoursePlannerStateI(planner.getGraduated());
         } else {
-            planner.setState(planner.getElective());
+            planner.setCoursePlannerStateI(planner.getElective());
         }
     }
 
@@ -73,15 +73,14 @@ public class Elective implements State {
     @Override
     public void assignCourse(Character course) {
         if (helper.isElective(course)) {
-            planner.setState(planner.getElective());
+            planner.setCoursePlannerStateI(planner.getElective());
             planner.setCourse(course);
             this.updatePrerequisites();
             return;
         }
         planner.getWaitList().add(course);
         Queue.dispatch();
-        planner.setState(planner.getMandatory());
-        System.out.println("In Elective course");
+        planner.setCoursePlannerStateI(planner.getMandatory());
     }
 
     @Override

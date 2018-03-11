@@ -56,14 +56,9 @@ public class DriverHelper {
             if(coursePlanner.getStateName().equals("Graduated")){
                 break;
             }
-            System.out.println(ch);
             coursePlanner.assign(ch.toCharArray()[0]);
         }
-        System.out.println();
         coursePlanner.verifyState();
-        for (Character element : coursePlanner.getCourse()) {
-            System.out.print(element);
-        }
     }
 
     /**
@@ -77,7 +72,6 @@ public class DriverHelper {
             String line;
             reader = fp.readerDesc(name);
             while ((line = fp.readLine(reader)) != null) {
-                System.out.println(line);
                 parseInput(line, coursePlanner);
             }
         } catch (Exception e) {

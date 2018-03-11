@@ -62,13 +62,8 @@ public class QueueHelper {
      * Empty the Queue logic
      */
     public void emptyQueue() {
-        List<Character> temp = new ArrayList<>();
         while (planner.getWaitList().size() > 0) {
-            temp.add(planner.getWaitList().poll());
-        }
-        for (Character element : temp) {
-            System.out.println(element);
-            planner.assign(element);
+            planner.assign(planner.getWaitList().poll());
         }
     }
 

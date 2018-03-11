@@ -3,7 +3,7 @@ package studentCoursePlanner.state;
 import studentCoursePlanner.utill.QueueHelper;
 import studentCoursePlanner.utill.StateHelper;
 
-public class NotGraduated implements State {
+public class NotGraduated implements CoursePlannerStateI {
 
     private CoursePlannerState planner;
     private QueueHelper Queue = null;
@@ -19,18 +19,18 @@ public class NotGraduated implements State {
     public void assignCourse(Character course) {
         if (helper.isElective(course)) {
             planner.setCourse(course);
-            planner.setState(planner.getElective());
+            planner.setCoursePlannerStateI(planner.getElective());
             return;
         }
         planner.setWaitList(course);
         Queue.dispatch();
-        planner.setState(planner.getMandatory());
+        planner.setCoursePlannerStateI(planner.getMandatory());
     }
 
     @Override
     public void verifyPrerequisiteState() {
         if (!(planner.isMandatoryStatus() && planner.isElectivesStatus())) {
-            planner.setState(planner.getNot_graduated());
+            planner.setCoursePlannerStateI(planner.getNot_graduated());
         }
     }
 

@@ -1,6 +1,6 @@
 package studentCoursePlanner.state;
 
-public interface State {
+public interface CoursePlannerStateI {
 
     void assignCourse(Character ch);
 

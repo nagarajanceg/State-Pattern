@@ -1,6 +1,6 @@
 package studentCoursePlanner.state;
 
-public class Graduated implements State {
+public class Graduated implements CoursePlannerStateI {
 
     private CoursePlannerState planner;
 
@@ -18,6 +18,6 @@ public class Graduated implements State {
 
     @Override
     public String toString() {
-        return "Graduated{ State" + '}';
+        return "Graduated{ CoursePlannerStateI" + '}';
     }
 }
